@@ -1,4 +1,4 @@
-# Mijn Erkenningen APP/PWA
+# Mijn Erkenningen App / Progressive Web App
 
 Mobile and Web app (PWA) for "Mijn Bureau Erkenningen"
 
