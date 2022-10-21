@@ -62,7 +62,7 @@ const DashboardPage: React.FC = () => {
         {data?.my?.Roles?.find(
           (r) =>
             r === ApplicationRolesEnum.Hoogleraar ||
-            ApplicationRolesEnum.Aanwezigheidsregistratie,
+            r === ApplicationRolesEnum.Aanwezigheidsregistratie,
         ) && <AankomendeBijeenkomsten />}
 
         {data?.my?.Roles?.find((r) => r === ApplicationRolesEnum.Student) &&
