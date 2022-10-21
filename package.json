@@ -1,0 +1,99 @@
+{
+  "name": "app-mijn-erkenningen",
+  "description": "Mijn Erkenningen app",
+  "version": "2.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
+    "eject": "react-scripts eject",
+    "ms": "node ./mocks/mockServer.js",
+    "codegen": "graphql-codegen --config codegen.yml"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.4.11",
+    "@awesome-cordova-plugins/barcode-scanner": "^5.40.0",
+    "@awesome-cordova-plugins/core": "^5.40.0",
+    "@capacitor/android": "3.4.1",
+    "@capacitor/app": "^1.1.1",
+    "@capacitor/core": "^3.4.1",
+    "@capacitor/haptics": "^1.1.4",
+    "@capacitor/ios": "^3.4.1",
+    "@capacitor/keyboard": "^1.2.2",
+    "@capacitor/status-bar": "^1.0.8",
+    "@graphql-codegen/cli": "^2.4.0",
+    "@graphql-codegen/introspection": "^2.1.0",
+    "@graphql-codegen/typescript": "^2.2.2",
+    "@graphql-codegen/typescript-operations": "^2.1.4",
+    "@graphql-codegen/typescript-react-apollo": "^3.2.4",
+    "@hookform/resolvers": "^2.8.0",
+    "@ionic-native/barcode-scanner": "^5.36.0",
+    "@ionic-native/core": "^5.36.0",
+    "@ionic/core": "^6.0.11",
+    "@ionic/pwa-elements": "^3.1.1",
+    "@ionic/react": "^6.0.11",
+    "@ionic/react-hooks": "0.0.8",
+    "@ionic/react-router": "^6.0.11",
+    "@types/react": "^17.0.21",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-router": "^5.1.16",
+    "@types/react-router-dom": "^5.3.3",
+    "apollo-link-token-refresh": "^0.4.0",
+    "date-fns": "^2.28.0",
+    "graphql": "^15.5.3",
+    "ionicons": "6.0.1",
+    "jwt-decode": "^3.1.2",
+    "phonegap-plugin-barcodescanner": "^8.1.0",
+    "qrcode-svg-table": "^1.1.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "7.26.0",
+    "react-markdown": "^8.0.3",
+    "react-qr-code": "^2.0.7",
+    "react-qr-reader": "^3.0.0-beta-1",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
+    "react-scripts": "4.0.3",
+    "typescript": "4.4.3",
+    "unstated-next": "^1.1.0",
+    "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^3.4.1",
+    "@ng-apimock/core": "^3.1.0",
+    "@ng-apimock/dev-interface": "^3.0.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.9.2",
+    "connect": "3.7.0",
+    "cordova-res": "^0.15.4",
+    "eslint-config-prettier": "^8.3.0",
+    "express": "^4.17.1",
+    "http-proxy": "^1.18.1",
+    "ng-apimock": "^1.4.9",
+    "prettier": "^2.4.0",
+    "pretty-quick": "3.1.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "engines": {
+    "node": ">=16.13.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:9999"
+}

@@ -1,0 +1,8 @@
+{
+	"appId": "nl.bureauerkenningen",
+	"appName": "Bureau Erkenningen",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "build",
+	"cordova": {}
+}
