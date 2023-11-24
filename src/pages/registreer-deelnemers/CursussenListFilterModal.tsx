@@ -64,18 +64,19 @@ export const CursussenListFilter: React.FC<WebinarListFilterModalProps> = ({
     dismissModal();
   };
 
-  const onSubmit: SubmitHandler<FilterSettingsRegistreerDeelnemerCursussen> =
-    async (data: FilterSettingsRegistreerDeelnemerCursussen) => {
-      try {
-        setFilterSettings(data);
+  const onSubmit: SubmitHandler<
+    FilterSettingsRegistreerDeelnemerCursussen
+  > = async (data: FilterSettingsRegistreerDeelnemerCursussen) => {
+    try {
+      setFilterSettings(data);
 
-        onFilter(data);
+      onFilter(data);
 
-        dismissModal();
-      } catch (err) {
-        console.log('#DH# err?', err);
-      }
-    };
+      dismissModal();
+    } catch (err) {
+      console.log('#DH# err?', err);
+    }
+  };
 
   return (
     <>

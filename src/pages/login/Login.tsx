@@ -38,10 +38,7 @@ export const LoginPage: React.FC<any> = React.memo(() => {
   const { setLicense } = SelectedLicense.useContainer();
   const redirect = new URLSearchParams(history.location.search).get('redirect');
 
-  const defaultValues =
-    process.env.NODE_ENV === 'production'
-      ? { username: '', password: '' }
-      : { username: 'groot600', password: 'groot600' };
+  const defaultValues = { username: '', password: '' };
 
   const {
     control,
