@@ -1,0 +1,7 @@
+{
+  "name": "app-my-erkenningen",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
