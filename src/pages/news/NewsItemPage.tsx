@@ -50,7 +50,7 @@ const NewsItemPage: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_ERKENNINGEN_CONTENT_API_URL}/news-items/${id}`,
+        `${import.meta.env.VITE_ERKENNINGEN_CONTENT_API_URL}/news-items/${id}`,
       );
       const data = await response.json();
       if (data.error) {
@@ -91,7 +91,17 @@ const NewsItemPage: React.FC = () => {
               <IonCardTitle>{newsItem.data?.attributes.title}</IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
-              <ReactMarkdown linkTarget={'_blank'}>
+              <ReactMarkdown
+                components={{
+                  a: ({ node, children, ...props }) => {
+                    if (props.href?.includes('http')) {
+                      props.target = '_blank';
+                      props.rel = 'noopener noreferrer';
+                    }
+                    return <a {...props}>{children}</a>;
+                  },
+                }}
+              >
                 {newsItem.data?.attributes.content}
               </ReactMarkdown>
               <p>
@@ -115,13 +125,11 @@ const NewsItemPage: React.FC = () => {
           </IonCard>
         )}
       </IonContent>
-      {isLoading && (
-        <IonLoading
-          isOpen={true}
-          message={'Even geduld aub, gegevens worden opgehaald'}
-          duration={0}
-        />
-      )}
+      <IonLoading
+        isOpen={isLoading}
+        message={'Even geduld aub, gegevens worden opgehaald'}
+        duration={0}
+      />
     </IonPage>
   );
 };

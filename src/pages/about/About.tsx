@@ -106,7 +106,7 @@ export const AboutPage: React.FC = () => {
         </IonListHeader>
         <IonList>
           <IonItem>
-            <IonLabel>{process.env.REACT_APP_VERSION}</IonLabel>
+            <IonLabel>2.1.0</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>

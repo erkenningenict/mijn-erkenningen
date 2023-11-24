@@ -80,11 +80,7 @@ const BijeenkomstenPage: React.FC = () => {
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
-      <IonModal
-        isOpen={showModal}
-        swipeToClose={true}
-        onDidDismiss={() => setShowModal(false)}
-      >
+      <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
         <SelectLicenseModal
           dismissModal={() => {
             setShowModal(false);

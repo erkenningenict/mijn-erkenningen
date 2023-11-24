@@ -64,18 +64,19 @@ export const CursussenListFilter: React.FC<WebinarListFilterModalProps> = ({
     dismissModal();
   };
 
-  const onSubmit: SubmitHandler<FilterSettingsRegistreerDeelnemerCursussen> =
-    async (data: FilterSettingsRegistreerDeelnemerCursussen) => {
-      try {
-        setFilterSettings(data);
+  const onSubmit: SubmitHandler<
+    FilterSettingsRegistreerDeelnemerCursussen
+  > = async (data: FilterSettingsRegistreerDeelnemerCursussen) => {
+    try {
+      setFilterSettings(data);
 
-        onFilter(data);
+      onFilter(data);
 
-        dismissModal();
-      } catch (err) {
-        console.log('#DH# err?', err);
-      }
-    };
+      dismissModal();
+    } catch (err) {
+      console.log('#DH# err?', err);
+    }
+  };
 
   return (
     <>
@@ -112,7 +113,9 @@ export const CursussenListFilter: React.FC<WebinarListFilterModalProps> = ({
                       firstDayOfWeek={1}
                       onIonChange={(e) => {
                         onChange(
-                          endOfDay(new Date(e.detail.value!)).toISOString(),
+                          endOfDay(
+                            new Date(e.detail.value! as string),
+                          ).toISOString(),
                         );
                       }}
                       value={value}
@@ -148,7 +151,9 @@ export const CursussenListFilter: React.FC<WebinarListFilterModalProps> = ({
                       firstDayOfWeek={1}
                       onIonChange={(e) => {
                         onChange(
-                          endOfDay(new Date(e.detail.value!)).toISOString(),
+                          endOfDay(
+                            new Date(e.detail.value! as string),
+                          ).toISOString(),
                         );
                       }}
                       value={value}

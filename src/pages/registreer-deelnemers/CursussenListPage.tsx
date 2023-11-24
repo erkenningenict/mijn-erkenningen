@@ -183,7 +183,6 @@ const CursussenListPage: React.FC = () => {
       </IonContent>
       <IonModal
         isOpen={showFilterModal}
-        swipeToClose={true}
         onDidDismiss={() => setShowFilterModal(false)}
       >
         <CursussenListFilter
@@ -193,13 +192,11 @@ const CursussenListPage: React.FC = () => {
           onFilter={handleSetFilterValues}
         />
       </IonModal>
-      {loadingCursusSessies && (
-        <IonLoading
-          isOpen={true}
-          message={'Even geduld aub, gegevens worden opgehaald'}
-          duration={0}
-        />
-      )}
+      <IonLoading
+        isOpen={loadingCursusSessies}
+        message={'Even geduld aub, gegevens worden opgehaald'}
+        duration={0}
+      />
     </IonPage>
   );
 };

@@ -84,20 +84,17 @@ const DigitaalList: React.FC = () => {
     let themaFilter = '';
     if (filterSettings.themaId !== 0) {
       themaFilter =
-        `Thema: ${
-          dataLists?.Themas.find((t) => t.ThemaID === filterSettings.themaId)
-            ?.Naam
-        }` ?? '';
+        `Thema: ${dataLists?.Themas.find(
+          (t) => t.ThemaID === filterSettings.themaId,
+        )?.Naam}` ?? '';
     }
 
     let sectorFilter = '';
     if (filterSettings.sectorId !== 0) {
       sectorFilter =
-        `Sector: ${
-          dataLists?.Kennisgebieden.find(
-            (k) => k.KennisgebiedID === filterSettings.sectorId,
-          )?.Naam
-        }` ?? '';
+        `Sector: ${dataLists?.Kennisgebieden.find(
+          (k) => k.KennisgebiedID === filterSettings.sectorId,
+        )?.Naam}` ?? '';
     }
 
     const res = [themaFilter, sectorFilter].filter((x) => x !== '').join(', ');
@@ -208,7 +205,6 @@ const DigitaalList: React.FC = () => {
       </IonContent>
       <IonModal
         isOpen={showFilterModal}
-        swipeToClose={true}
         onDidDismiss={() => setShowFilterModal(false)}
       >
         <DigitaalListFilterModal
@@ -218,13 +214,11 @@ const DigitaalList: React.FC = () => {
           onFilter={handleSetFilterValues}
         />
       </IonModal>
-      {loading && (
-        <IonLoading
-          isOpen={true}
-          message={'Even geduld aub, gegevens worden opgehaald'}
-          duration={0}
-        />
-      )}
+      <IonLoading
+        isOpen={loading}
+        message={'Even geduld aub, gegevens worden opgehaald'}
+        duration={0}
+      />
     </IonPage>
   );
 };

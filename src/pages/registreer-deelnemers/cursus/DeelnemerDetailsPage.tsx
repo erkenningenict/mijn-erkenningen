@@ -49,8 +49,11 @@ const DeelnemerDetailsPage: React.FC = () => {
   const [selectedLicenseId, setSelectedLicenseId] = useState<number>(0);
   const { setFilterSettings } = ViewFilterDeelnemer.useContainer();
 
-  const { persoonId, cursusId, pasNummer } =
-    useParams<{ persoonId: string; cursusId: string; pasNummer: string }>();
+  const { persoonId, cursusId, pasNummer } = useParams<{
+    persoonId: string;
+    cursusId: string;
+    pasNummer: string;
+  }>();
 
   const { loading, error, data } = useApp_GetCursusDeelnemerQuery({
     variables: {
@@ -285,8 +288,8 @@ const DeelnemerDetailsPage: React.FC = () => {
                       deelnameStatus === CursusDeelnameStatusEnum.Aanwezig
                         ? 'success'
                         : deelnameStatus === CursusDeelnameStatusEnum.Aangemeld
-                        ? 'tertiary'
-                        : ''
+                          ? 'tertiary'
+                          : ''
                     }
                   >
                     <strong>Status:</strong>&nbsp;
@@ -425,15 +428,15 @@ const DeelnemerDetailsPage: React.FC = () => {
               </div>
             </>
           )}
-          {(loading ||
-            loadingRegisterForCourseByHoogleraar ||
-            loadingUnregisterForCourseByHoogleraar) && (
-            <IonLoading
-              isOpen={true}
-              message={'Even geduld aub, gegevens worden opgehaald'}
-              duration={0}
-            />
-          )}
+          <IonLoading
+            isOpen={
+              loading ||
+              loadingRegisterForCourseByHoogleraar ||
+              loadingUnregisterForCourseByHoogleraar
+            }
+            message={'Even geduld aub, gegevens worden opgehaald'}
+            duration={0}
+          />
         </>
       </IonContent>
     </IonPage>

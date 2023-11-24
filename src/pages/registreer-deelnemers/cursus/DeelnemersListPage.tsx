@@ -23,7 +23,7 @@ import {
   IonListHeader,
 } from '@ionic/react';
 import { add, qrCode, card, personOutline } from 'ionicons/icons';
-import { RegistreerDeelnemerByQRModal } from './RegistreerDeelnemerByQRModal';
+// import { RegistreerDeelnemerByQRModal } from './RegistreerDeelnemerByQRModal';
 import { RegistreerDeelnemerByManualModal } from './RegistreerDeelnemerByManualModal';
 import { RegistreerDeelnemerByCardModal } from './RegistreerDeelnemerByCardModal';
 
@@ -43,10 +43,10 @@ const DeelnemersListPage: React.FC = () => {
   const { cursusId } = useParams<{ cursusId: string }>();
   const [searchText, setSearchText] = useState('');
 
-  const [
-    showRegistreerDeelnemerByQRModal,
-    setShowRegistreerDeelnemerByQRModal,
-  ] = useState<boolean>(false);
+  // const [
+  //   showRegistreerDeelnemerByQRModal,
+  //   setShowRegistreerDeelnemerByQRModal,
+  // ] = useState<boolean>(false);
 
   const [ShowRegistreerDeelnemerByManual, setShowRegistreerDeelnemerByManual] =
     useState<boolean>(false);
@@ -339,18 +339,17 @@ const DeelnemersListPage: React.FC = () => {
                 >
                   <IonIcon icon={card} />
                 </IonFabButton>
-                <IonFabButton
+                {/* <IonFabButton
                   onClick={() => setShowRegistreerDeelnemerByQRModal(true)}
                 >
                   <IonIcon icon={qrCode} />
-                </IonFabButton>
+                </IonFabButton> */}
               </IonFabList>
             </IonFab>
           )}
 
-          <IonModal
+          {/* <IonModal
             isOpen={showRegistreerDeelnemerByQRModal}
-            swipeToClose={true}
             onDidDismiss={() => setShowRegistreerDeelnemerByQRModal(false)}
           >
             <RegistreerDeelnemerByQRModal
@@ -358,11 +357,10 @@ const DeelnemersListPage: React.FC = () => {
                 setShowRegistreerDeelnemerByQRModal(false);
               }}
             />
-          </IonModal>
+          </IonModal> */}
 
           <IonModal
             isOpen={ShowRegistreerDeelnemerByManual}
-            swipeToClose={true}
             onDidDismiss={() => setShowRegistreerDeelnemerByManual(false)}
           >
             <RegistreerDeelnemerByManualModal
@@ -378,7 +376,6 @@ const DeelnemersListPage: React.FC = () => {
 
           <IonModal
             isOpen={showRegistreerDeelnemerByCardModal}
-            swipeToClose={true}
             onDidDismiss={() => setShowRegistreerDeelnemerByCardModal(false)}
           >
             <RegistreerDeelnemerByCardModal
@@ -389,13 +386,11 @@ const DeelnemersListPage: React.FC = () => {
           </IonModal>
         </IonContent>
       )}
-      {(loadingDeelnemers || loadingCursusDetails) && (
-        <IonLoading
-          isOpen={true}
-          message={'Even geduld aub, gegevens worden opgehaald'}
-          duration={0}
-        />
-      )}
+      <IonLoading
+        isOpen={loadingDeelnemers || loadingCursusDetails}
+        message={'Even geduld aub, gegevens worden opgehaald'}
+        duration={0}
+      />
     </IonPage>
   );
 };

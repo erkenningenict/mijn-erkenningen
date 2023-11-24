@@ -205,7 +205,6 @@ const OpLocatieDetailsPage: React.FC<BijeenkomstDetailsProps> = () => {
         <>
           <IonModal
             isOpen={showLicenseModal}
-            swipeToClose={true}
             onDidDismiss={() => setShowLicenseModal(false)}
           >
             <SelectLicenseModal
@@ -293,22 +292,22 @@ const OpLocatieDetailsPage: React.FC<BijeenkomstDetailsProps> = () => {
                     <WebsiteLink website={d.OrganizerWebsite} />
                   )}
 
-                  {!d.Registered && data?.isLicenseValidForSpecialty.success && (
-                    <IonButton
-                      type="button"
-                      expand="block"
-                      className="mt-2"
-                      onClick={handleOpenRegisterModal}
-                    >
-                      Aanmelden
-                    </IonButton>
-                  )}
+                  {!d.Registered &&
+                    data?.isLicenseValidForSpecialty.success && (
+                      <IonButton
+                        type="button"
+                        expand="block"
+                        className="mt-2"
+                        onClick={handleOpenRegisterModal}
+                      >
+                        Aanmelden
+                      </IonButton>
+                    )}
                 </IonCardContent>
               </IonCard>
 
               <IonModal
                 isOpen={showModal}
-                swipeToClose={true}
                 onDidDismiss={() => setShowModal(false)}
               >
                 <RegisterModal
@@ -328,20 +327,16 @@ const OpLocatieDetailsPage: React.FC<BijeenkomstDetailsProps> = () => {
             </>
           )}
         </>
-        {(loading || loadingNoLicense) && (
-          <IonLoading
-            isOpen={true}
-            message={'Even geduld aub, gegevens worden opgehaald'}
-            duration={0}
-          />
-        )}
-        {mutationLoading && (
-          <IonLoading
-            isOpen={true}
-            message={'Even geduld aub, gegevens worden verwerkt'}
-            duration={0}
-          />
-        )}
+        <IonLoading
+          isOpen={loading || loadingNoLicense}
+          message={'Even geduld aub, gegevens worden opgehaald'}
+          duration={0}
+        />
+        <IonLoading
+          isOpen={mutationLoading}
+          message={'Even geduld aub, gegevens worden verwerkt'}
+          duration={0}
+        />
       </IonContent>
     </IonPage>
   );

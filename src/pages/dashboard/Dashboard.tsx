@@ -48,13 +48,11 @@ const DashboardPage: React.FC = () => {
       </IonHeader>
 
       <IonContent>
-        {loading && (
-          <IonLoading
-            isOpen={true}
-            message={'Even geduld aub, gegevens worden opgehaald'}
-            duration={0}
-          />
-        )}
+        <IonLoading
+          isOpen={loading}
+          message={'Even geduld aub, gegevens worden opgehaald'}
+          duration={0}
+        />
         <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
           <IonRefresherContent></IonRefresherContent>
         </IonRefresher>

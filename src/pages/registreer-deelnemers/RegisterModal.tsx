@@ -604,20 +604,16 @@ export const RegisterModal: React.FC<RegisterModalProps> = React.memo(
               Aanmelding bevestigen
             </IonButton>
           </form>
-          {loading && (
-            <IonLoading
-              isOpen={true}
-              message={'Even geduld aub, gegevens worden opgehaald'}
-              duration={0}
-            />
-          )}
-          {mutationLoading && (
-            <IonLoading
-              isOpen={true}
-              message={'Even geduld aub, gegevens worden opgeslagen'}
-              duration={0}
-            />
-          )}
+          <IonLoading
+            isOpen={loading}
+            message={'Even geduld aub, gegevens worden opgehaald'}
+            duration={0}
+          />
+          <IonLoading
+            isOpen={mutationLoading}
+            message={'Even geduld aub, gegevens worden opgeslagen'}
+            duration={0}
+          />
         </IonContent>
       </>
     );

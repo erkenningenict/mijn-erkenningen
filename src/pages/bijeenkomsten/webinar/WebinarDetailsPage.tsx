@@ -164,7 +164,6 @@ const WebinarDetailsPage: React.FC<BijeenkomstDetailsProps> = () => {
         <>
           <IonModal
             isOpen={showLicenseModal}
-            swipeToClose={true}
             onDidDismiss={() => setShowLicenseModal(false)}
           >
             <SelectLicenseModal
@@ -262,24 +261,19 @@ const WebinarDetailsPage: React.FC<BijeenkomstDetailsProps> = () => {
                     )}
                 </IonCardContent>
               </IonCard>
-              {loading && (
-                <IonLoading
-                  isOpen={true}
-                  message={'Even geduld aub, gegevens worden opgehaald'}
-                  duration={0}
-                />
-              )}
-              {mutationLoading && (
-                <IonLoading
-                  isOpen={true}
-                  message={'Even geduld aub, gegevens worden verwerkt'}
-                  duration={0}
-                />
-              )}
+              <IonLoading
+                isOpen={loading}
+                message={'Even geduld aub, gegevens worden opgehaald'}
+                duration={0}
+              />
+              <IonLoading
+                isOpen={mutationLoading}
+                message={'Even geduld aub, gegevens worden verwerkt'}
+                duration={0}
+              />
 
               <IonModal
                 isOpen={showModal}
-                swipeToClose={true}
                 onDidDismiss={() => setShowModal(false)}
               >
                 <RegisterModal

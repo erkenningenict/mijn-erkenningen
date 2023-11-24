@@ -77,16 +77,16 @@ const OpLocatieList: React.FC = () => {
   const { error: errorLists, data: dataLists } = useApp_GetListsQuery({
     fetchPolicy: 'cache-first',
   });
+  const userPostcode = myData?.my?.Persoon.Contactgegevens.Postcode;
 
   useEffect(() => {
-    const userPostcode = myData?.my?.Persoon.Contactgegevens.Postcode;
     if (filterSettings.postcode === '') {
       setFilterSettings({
         ...filterSettings,
         postcode: userPostcode ?? '',
       });
     }
-  }, [myData, filterSettings, setFilterSettings]);
+  }, [userPostcode]);
 
   if (error || errorLists) {
     console.log('#DH# my errors', error, myError);
@@ -125,28 +125,23 @@ const OpLocatieList: React.FC = () => {
     let themaFilter = '';
     if (filterSettings.themaId !== 0) {
       themaFilter =
-        `Thema: ${
-          dataLists?.Themas.find((t) => t.ThemaID === filterSettings.themaId)
-            ?.Naam
-        }` ?? '';
+        `Thema: ${dataLists?.Themas.find(
+          (t) => t.ThemaID === filterSettings.themaId,
+        )?.Naam}` ?? '';
     }
     let competentieFilter = '';
     if (filterSettings.competentieId !== 0) {
       competentieFilter =
-        `Bijeenkomsttype: ${
-          dataLists?.Competenties.find(
-            (c) => c.CompetentieID === filterSettings.competentieId,
-          )?.Naam
-        }` ?? '';
+        `Bijeenkomsttype: ${dataLists?.Competenties.find(
+          (c) => c.CompetentieID === filterSettings.competentieId,
+        )?.Naam}` ?? '';
     }
     let sectorFilter = '';
     if (filterSettings.sectorId !== 0) {
       sectorFilter =
-        `Sector: ${
-          dataLists?.Kennisgebieden.find(
-            (k) => k.KennisgebiedID === filterSettings.sectorId,
-          )?.Naam
-        }` ?? '';
+        `Sector: ${dataLists?.Kennisgebieden.find(
+          (k) => k.KennisgebiedID === filterSettings.sectorId,
+        )?.Naam}` ?? '';
     }
     let afstand = '';
     if (filterSettings.afstand !== 0) {
@@ -283,7 +278,6 @@ const OpLocatieList: React.FC = () => {
 
       <IonModal
         isOpen={showFilterModal}
-        swipeToClose={true}
         onDidDismiss={() => setShowFilterModal(false)}
       >
         <OpLocatieListFilterModal
@@ -293,13 +287,11 @@ const OpLocatieList: React.FC = () => {
           onFilter={handleSetFilterValues}
         />
       </IonModal>
-      {(loading || loadingMy) && (
-        <IonLoading
-          isOpen={true}
-          message={'Even geduld aub, gegevens worden opgehaald'}
-          duration={0}
-        />
-      )}
+      <IonLoading
+        isOpen={loading || loadingMy}
+        message={'Even geduld aub, gegevens worden opgehaald'}
+        duration={0}
+      />
     </IonPage>
   );
 };

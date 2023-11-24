@@ -111,18 +111,12 @@ const ProfilePage: React.FC = () => {
             </p>
           </IonCardContent>
         </IonCard>
-        {loading && (
-          <IonLoading
-            isOpen={true}
-            message={'Even geduld aub, gegevens worden opgehaald'}
-            duration={0}
-          />
-        )}
-        <IonModal
-          isOpen={showModal}
-          swipeToClose={true}
-          onDidDismiss={() => setShowModal(false)}
-        >
+        <IonLoading
+          isOpen={loading}
+          message={'Even geduld aub, gegevens worden opgehaald'}
+          duration={0}
+        />
+        <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
           <EditProfileModal
             contactgegevens={
               data?.my?.Persoon.Contactgegevens ||

@@ -58,7 +58,9 @@ const NewsPage: React.FC = () => {
     try {
       // filter on archivedDate is null and sort descending on updatedAt (last edited item at the top)
       const response = await fetch(
-        `${process.env.REACT_APP_ERKENNINGEN_CONTENT_API_URL}/news-items?filters[archivedDate][$null]=true&sort[0]=updatedAt%3Adesc`,
+        `${
+          import.meta.env.VITE_ERKENNINGEN_CONTENT_API_URL
+        }/news-items?filters[archivedDate][$null]=true&sort[0]=updatedAt%3Adesc`,
       );
       const data = await response.json();
       if (data.error) {
@@ -131,13 +133,11 @@ const NewsPage: React.FC = () => {
           <IonRefresherContent></IonRefresherContent>
         </IonRefresher>
       </IonContent>
-      {isLoading && (
-        <IonLoading
-          isOpen={true}
-          message={'Even geduld aub, gegevens worden opgehaald'}
-          duration={0}
-        />
-      )}
+      <IonLoading
+        isOpen={isLoading}
+        message={'Even geduld aub, gegevens worden opgehaald'}
+        duration={0}
+      />
     </IonPage>
   );
 };

@@ -135,8 +135,8 @@ const MijnLicentiesPage: React.FC<MijnLicentiesProps> = () => {
               new Date(c.EindDatum) < new Date()
                 ? 'verlopen'
                 : new Date(c.BeginDatum) > new Date()
-                ? 'nog niet geldig'
-                : relativeTimeFormatter(c.EindDatum);
+                  ? 'nog niet geldig'
+                  : relativeTimeFormatter(c.EindDatum);
             return (
               <IonItem
                 key={c.CertificeringID}
@@ -168,13 +168,11 @@ const MijnLicentiesPage: React.FC<MijnLicentiesProps> = () => {
           })}
         </IonList>
       </IonContent>
-      {loading && (
-        <IonLoading
-          isOpen={true}
-          message={'Even geduld aub, gegevens worden opgehaald'}
-          duration={0}
-        />
-      )}
+      <IonLoading
+        isOpen={loading}
+        message={'Even geduld aub, gegevens worden opgehaald'}
+        duration={0}
+      />
     </IonPage>
   );
 };

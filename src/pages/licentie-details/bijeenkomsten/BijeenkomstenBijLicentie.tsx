@@ -238,14 +238,11 @@ const BijeenkomstenBijLicentie: React.FC = () => {
           </IonItemDivider>
         </IonList>
       </IonContent>
-      {loading ||
-        (studyProgressLoading && (
-          <IonLoading
-            isOpen={true}
-            message={'Even geduld aub, gegevens worden opgehaald'}
-            duration={0}
-          />
-        ))}
+      <IonLoading
+        isOpen={loading || studyProgressLoading}
+        message={'Even geduld aub, gegevens worden opgehaald'}
+        duration={0}
+      />
     </IonPage>
   );
 };

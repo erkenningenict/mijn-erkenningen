@@ -237,7 +237,6 @@ const DeelMetKennisaanbiederPage: React.FC = () => {
       </IonContent>
       <IonModal
         isOpen={showFilterModal}
-        swipeToClose={true}
         onDidDismiss={() => setShowFilterModal(false)}
       >
         <DeelMetKennisaanbiederFilterModal
@@ -247,13 +246,11 @@ const DeelMetKennisaanbiederPage: React.FC = () => {
           onFilter={handleSetFilterValues}
         />
       </IonModal>
-      {(handelshuisVestigingenLoading || personListLoading) && (
-        <IonLoading
-          isOpen={true}
-          message={'Even geduld aub, gegevens worden opgehaald'}
-          duration={0}
-        />
-      )}
+      <IonLoading
+        isOpen={handelshuisVestigingenLoading || personListLoading}
+        message={'Even geduld aub, gegevens worden opgehaald'}
+        duration={0}
+      />
     </IonPage>
   );
 };

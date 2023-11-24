@@ -1,4 +1,4 @@
-export const CardHeader: React.FC = (props) => {
+export const CardHeader = (props: { children: React.ReactNode }) => {
   return (
     <div
       style={{

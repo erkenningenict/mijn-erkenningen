@@ -38,10 +38,7 @@ export const LoginPage: React.FC<any> = React.memo(() => {
   const { setLicense } = SelectedLicense.useContainer();
   const redirect = new URLSearchParams(history.location.search).get('redirect');
 
-  const defaultValues =
-    process.env.NODE_ENV === 'production'
-      ? { username: '', password: '' }
-      : { username: 'Groot600', password: '1234' };
+  const defaultValues = { username: '', password: '' };
 
   const {
     control,
@@ -203,13 +200,11 @@ export const LoginPage: React.FC<any> = React.memo(() => {
           </IonItem>
         </form>
 
-        {loading && (
-          <IonLoading
-            isOpen={true}
-            message={'Even geduld aub, u wordt ingelogd'}
-            duration={0}
-          />
-        )}
+        <IonLoading
+          isOpen={loading}
+          message={'Even geduld aub, u wordt ingelogd'}
+          duration={0}
+        />
       </IonContent>
     </IonPage>
   );

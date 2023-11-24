@@ -143,13 +143,11 @@ const LicenseDetails: React.FC = () => {
           <IonLabel>Passen</IonLabel>
         </IonTabButton>
       </IonTabBar>
-      {loading && (
-        <IonLoading
-          isOpen={true}
-          message={'Even geduld aub, gegevens worden opgehaald'}
-          duration={0}
-        />
-      )}
+      <IonLoading
+        isOpen={loading}
+        message={'Even geduld aub, gegevens worden opgehaald'}
+        duration={0}
+      />
     </IonTabs>
   );
 };

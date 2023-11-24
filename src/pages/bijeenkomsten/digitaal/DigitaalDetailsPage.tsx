@@ -118,7 +118,6 @@ const DigitaalDetailsPage: React.FC<DigitaalDetailsProps> = () => {
         <>
           <IonModal
             isOpen={showLicenseModal}
-            swipeToClose={true}
             onDidDismiss={() => setShowLicenseModal(false)}
           >
             <SelectLicenseModal
@@ -214,17 +213,14 @@ const DigitaalDetailsPage: React.FC<DigitaalDetailsProps> = () => {
                   )}
                 </IonCardContent>
               </IonCard>
-              {(loading || loadingNoLicense) && (
-                <IonLoading
-                  isOpen={true}
-                  message={'Even geduld aub, gegevens worden opgehaald'}
-                  duration={0}
-                />
-              )}
+              <IonLoading
+                isOpen={loading || loadingNoLicense}
+                message={'Even geduld aub, gegevens worden opgehaald'}
+                duration={0}
+              />
 
               <IonModal
                 isOpen={showModal}
-                swipeToClose={true}
                 onDidDismiss={() => setShowModal(false)}
               >
                 <RegisterModal

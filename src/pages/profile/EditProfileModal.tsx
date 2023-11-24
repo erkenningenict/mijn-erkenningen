@@ -198,13 +198,11 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
           </IonButton>
         </form>
 
-        {mutationLoading && (
-          <IonLoading
-            isOpen={true}
-            message={'Even geduld aub, gegevens worden opgeslagen'}
-            duration={0}
-          />
-        )}
+        <IonLoading
+          isOpen={mutationLoading}
+          message={'Even geduld aub, gegevens worden opgeslagen'}
+          duration={0}
+        />
       </IonContent>
     </>
   );

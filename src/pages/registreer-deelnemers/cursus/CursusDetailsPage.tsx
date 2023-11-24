@@ -144,13 +144,11 @@ const CursusDetailsPage: React.FC = () => {
             </IonCard>
           </>
         )}
-        {loading && (
-          <IonLoading
-            isOpen={true}
-            message={'Even geduld aub, gegevens worden opgehaald'}
-            duration={0}
-          />
-        )}
+        <IonLoading
+          isOpen={loading}
+          message={'Even geduld aub, gegevens worden opgehaald'}
+          duration={0}
+        />
       </IonContent>
     </IonPage>
   );

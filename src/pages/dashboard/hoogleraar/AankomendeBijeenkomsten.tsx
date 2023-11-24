@@ -98,13 +98,11 @@ const AankomendeBijeenkomsten: React.FC = () => {
           </IonLabel>
         </IonItem>
       )}
-      {loadingCursusSessies && (
-        <IonLoading
-          isOpen={true}
-          message={'Even geduld aub, gegevens worden opgehaald'}
-          duration={0}
-        />
-      )}
+      <IonLoading
+        isOpen={loadingCursusSessies}
+        message={'Even geduld aub, gegevens worden opgehaald'}
+        duration={0}
+      />
     </>
   );
 };

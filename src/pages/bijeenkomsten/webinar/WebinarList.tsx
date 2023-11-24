@@ -92,28 +92,23 @@ const WebinarList: React.FC = () => {
     let themaFilter = '';
     if (filterSettings.themaId !== 0) {
       themaFilter =
-        `Thema: ${
-          dataLists?.Themas.find((t) => t.ThemaID === filterSettings.themaId)
-            ?.Naam
-        }` ?? '';
+        `Thema: ${dataLists?.Themas.find(
+          (t) => t.ThemaID === filterSettings.themaId,
+        )?.Naam}` ?? '';
     }
     let competentieFilter = '';
     if (filterSettings.competentieId !== 0) {
       competentieFilter =
-        `Bijeenkomsttype: ${
-          dataLists?.Competenties.find(
-            (c) => c.CompetentieID === filterSettings.competentieId,
-          )?.Naam
-        }` ?? '';
+        `Bijeenkomsttype: ${dataLists?.Competenties.find(
+          (c) => c.CompetentieID === filterSettings.competentieId,
+        )?.Naam}` ?? '';
     }
     let sectorFilter = '';
     if (filterSettings.sectorId !== 0) {
       sectorFilter =
-        `Sector: ${
-          dataLists?.Kennisgebieden.find(
-            (k) => k.KennisgebiedID === filterSettings.sectorId,
-          )?.Naam
-        }` ?? '';
+        `Sector: ${dataLists?.Kennisgebieden.find(
+          (k) => k.KennisgebiedID === filterSettings.sectorId,
+        )?.Naam}` ?? '';
     }
     const dateFilters = `${toDutchDate(
       filterSettings.datumVanaf,
@@ -237,7 +232,6 @@ const WebinarList: React.FC = () => {
       </IonContent>
       <IonModal
         isOpen={showFilterModal}
-        swipeToClose={true}
         onDidDismiss={() => setShowFilterModal(false)}
       >
         <WebinarListFilterModal
@@ -247,13 +241,11 @@ const WebinarList: React.FC = () => {
           onFilter={handleSetFilterValues}
         />
       </IonModal>
-      {loading && (
-        <IonLoading
-          isOpen={true}
-          message={'Even geduld aub, gegevens worden opgehaald'}
-          duration={0}
-        />
-      )}
+      <IonLoading
+        isOpen={loading}
+        message={'Even geduld aub, gegevens worden opgehaald'}
+        duration={0}
+      />
     </IonPage>
   );
 };

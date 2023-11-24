@@ -99,13 +99,11 @@ export const DigitaalListFilterModal: React.FC<WebinarListFilterModalProps> = ({
 
       {loading || loadingMy ? (
         <IonContent>
-          {loading && (
-            <IonLoading
-              isOpen={true}
-              message={'Even geduld aub, gegevens worden opgehaald'}
-              duration={0}
-            />
-          )}
+          <IonLoading
+            isOpen={loading}
+            message={'Even geduld aub, gegevens worden opgehaald'}
+            duration={0}
+          />
         </IonContent>
       ) : (
         <IonContent>
@@ -182,11 +180,7 @@ export const DigitaalListFilterModal: React.FC<WebinarListFilterModalProps> = ({
               Toepassen
             </IonButton>
           </form>
-          <IonModal
-            isOpen={showModal}
-            swipeToClose={true}
-            onDidDismiss={() => setShowModal(false)}
-          >
+          <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
             <SelectLicenseModal
               dismissModal={() => {
                 setShowModal(false);

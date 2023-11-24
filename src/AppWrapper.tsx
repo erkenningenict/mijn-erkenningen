@@ -1,6 +1,6 @@
 import React from 'react';
 import App from './App';
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import {
   ApolloClient,
@@ -124,22 +124,28 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = new HttpLink({
-  uri: process.env.REACT_APP_ERKENNINGEN_GRAPHQL_API_URL,
+  uri: import.meta.env.VITE_ERKENNINGEN_GRAPHQL_API_URL,
   credentials: 'include',
 });
 
 const refreshTokenLink = new TokenRefreshLink({
   accessTokenField: 'accessToken',
-  isTokenValidOrUndefined: () => {
+  isTokenValidOrUndefined: async () => {
     const accessToken = getAuthState()?.accessToken;
 
-    if (!accessToken) return true;
+    if (!accessToken) {
+      return true;
+    }
 
     try {
-      const { exp } = jwtDecode(accessToken) as { exp: number };
-      const expires = new Date(exp * 1000);
-      if (new Date().getTime() >= expires.getTime()) return false;
-      return true;
+      const { exp } = jwtDecode(accessToken);
+      if (exp) {
+        const expires = new Date(exp * 1000);
+        if (new Date().getTime() >= expires.getTime()) return false;
+        return true;
+      } else {
+        return false;
+      }
     } catch {
       return false;
     }
@@ -147,7 +153,7 @@ const refreshTokenLink = new TokenRefreshLink({
   fetchAccessToken: async () => {
     const refreshToken = getAuthState()?.refreshToken;
     const res = await fetch(
-      process.env.REACT_APP_ERKENNINGEN_GRAPHQL_API_URL as string,
+      process.env.VITE_ERKENNINGEN_GRAPHQL_API_URL as string,
       {
         method: 'POST',
         credentials: 'include',
@@ -220,7 +226,7 @@ export const client = new ApolloClient({
   link: from([refreshTokenLink, errorLink, authLink, httpLink]),
   cache,
   name: 'bureau-erkenningen-app',
-  version: '1.3',
+  version: '2.0.1',
 });
 
 export const AppWrapper: React.FC = () => {
