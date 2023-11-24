@@ -1,0 +1,10 @@
+.welcome-card img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+
+section {
+  margin-top: 1em;
+  margin-bottom: 2.5em;
+  padding: 0 10px;
+}

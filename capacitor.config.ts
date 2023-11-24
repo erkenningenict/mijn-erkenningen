@@ -1,12 +1,12 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'new.ionic.v7',
-  appName: 'new-ionic-7',
+  appId: 'nl.bureauerkenningen',
+  appName: 'Bureau Erkenningen',
   webDir: 'dist',
   server: {
-    androidScheme: 'https'
-  }
+    androidScheme: 'https',
+  },
 };
 
 export default config;

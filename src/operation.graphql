@@ -1,0 +1,843 @@
+query App_getMy {
+  my {
+    personId
+    Roles
+    Persoon {
+      PersoonID
+      Geboortedatum
+      FullName
+      Geslacht
+      IsGbaGeregistreerd
+      Contactgegevens {
+        ...MyContactgegevensFields
+      }
+    }
+
+    # VakgroepLinks(activeOnly: true) {
+    #   VakgroepID
+    # }
+    # ExamenInstellingLinks(activeOnly: true) {
+    #   ExamenInstellingID
+    # }
+    Certificeringen(inclusiefPassen: true) {
+      ...CertificeringenFields
+    }
+  }
+}
+
+fragment MyContactgegevensFields on Contactgegevens {
+  ContactgegevensID
+  DisplayAddress
+  Adresregel1
+  Adresregel2
+  Huisnummer
+  HuisnummerToevoeging
+  Postcode
+  Woonplaats
+  Land
+  Email
+  EmailWerkgever
+  Telefoon
+}
+
+fragment CertificeringenFields on Certificering {
+  CertificeringID
+  NummerWeergave
+  Status
+  BeginDatum
+  EindDatum
+  Certificaat {
+    CertificaatID
+    Code
+    Naam
+  }
+  DatumIngetrokkenVan
+  DatumIngetrokkenTot
+  UitstelTot
+  UitstelVerleend
+}
+
+mutation App_Authenticate($input: AuthenticateInput!) {
+  authenticate(input: $input) {
+    Persoon {
+      PersoonID
+      Achternaam
+      Geboortedatum
+      Voorletters
+    }
+    roles
+    accessToken
+    refreshToken
+  }
+}
+
+mutation App_Logout {
+  logout
+}
+
+query App_GetStudyProgressByLicenseId($certificeringId: Int!) {
+  getStudyProgressByLicenseId(
+    certificeringId: $certificeringId
+    skipParticipationDetails: false
+  ) {
+    Certificering {
+      ...CertificeringFields
+    }
+    ...StudyProgressFields
+  }
+}
+
+fragment CertificeringFields on Certificering {
+  PersoonID
+  Persoon {
+    PersoonID
+    FullName
+    Geboortedatum
+  }
+  CertificeringID
+  CertificaatID
+  Certificaat {
+    CertificaatID
+    Naam
+    Code
+  }
+  Status
+  NummerWeergave
+  DatumVoldaan
+  BeginDatum
+  EindDatum
+  DatumIngetrokkenVan
+  DatumIngetrokkenTot
+  UitstelTot
+  UitstelVerleend
+  Passen {
+    ...PasFields
+  }
+}
+
+fragment PasFields on Pas {
+  PasID
+  Status
+  DatumUitgeleverd
+  DatumAanvraag
+}
+
+fragment StudieresultatenFieldsOnStudyProgress on Studieresultaat {
+  StudieresultaatID
+  Datum
+  Status
+  Cursus {
+    CursusID
+    CursusCode
+    Status
+    Titel
+    Vak {
+      VakID
+      Titel
+      Vakgroep {
+        VakgroepID
+        Naam
+        Contactgegevens {
+          ContactgegevensID
+          Telefoon
+        }
+      }
+      ThemaNaam
+      CompetentieNaam
+    }
+    Sessies {
+      SessieID
+      DatumBegintijd
+      Lokatie {
+        LokatieID
+        Naam
+        Contactgegevens {
+          ContactgegevensID
+          Woonplaats
+        }
+      }
+    }
+  }
+}
+
+fragment StudyProgressFields on StudyProgress {
+  RequiredPoints
+  DonePoints
+  CountedPoints
+  RequiredPointsTodo
+  Completed
+  PointsToDo
+  ParticipationPoints {
+    ...ParticipationPointsFields
+  }
+  Studieresultaten {
+    ...StudieresultatenFieldsOnStudyProgress
+  }
+}
+
+fragment ParticipationPointsFields on ParticipationPoint {
+  ThemaId
+  ThemaNaam
+  RequiredPoints
+  DonePoints
+  CountedPoints
+}
+
+query App_GetMyStudieresultatenEnAangemeldeCursusdeelnames(
+  $certificeringId: Int!
+) {
+  my {
+    personId
+    Studieresultaten(certificeringId: $certificeringId, fullDetails: true) {
+      StudieresultaatID
+      Certificering {
+        CertificeringID
+        NummerWeergave
+        CertificaatID
+      }
+      Cursus {
+        ...CursusFields
+      }
+    }
+    AangemeldeCursusDeelnamesPerCertificeringId(
+      certificeringId: $certificeringId
+    ) {
+      CursusDeelnameID
+      Status
+      Cursus {
+        ...CursusFields
+      }
+    }
+  }
+}
+
+fragment LokatieFields on Lokatie {
+  LokatieID
+  Naam
+  Contactgegevens {
+    ContactgegevensID
+    DisplayAddress
+    DisplayStreetHouseNr
+    DisplayPostalCodeCity
+  }
+}
+
+fragment CursusFields on Cursus {
+  CursusID
+  CursusCode
+  Prijs
+  Titel
+  Promotietekst
+  Status
+  Sessies {
+    SessieID
+    DatumBegintijd
+    DatumEindtijd
+    Lokatie {
+      ...LokatieFields
+    }
+  }
+  Vak {
+    VakID
+    ThemaNaam
+    CompetentieNaam
+    Vakgroep {
+      ...VakgroepFields
+    }
+    ExamenInstelling {
+      ...ExamenInstellingFields
+    }
+  }
+}
+
+fragment VakgroepFields on Vakgroep {
+  VakgroepID
+  Naam
+  Contactgegevens {
+    ContactgegevensID
+    Email
+    Telefoon
+    Website
+  }
+}
+
+fragment ExamenInstellingFields on ExamenInstelling {
+  ExamenInstellingID
+  Naam
+  Contactgegevens {
+    ContactgegevensID
+    Email
+    Telefoon
+    Website
+  }
+}
+
+mutation App_updateContactgegevens($input: updateContactgegevensInput!) {
+  updateContactgegevens(input: $input) {
+    ContactgegevensID
+    Email
+    EmailWerkgever
+    Telefoon
+  }
+}
+
+query App_GetCursusSessies($input: searchCourseSessionsInput!) {
+  CursusSessies(input: $input) {
+    ...CursusSessiesFields
+  }
+}
+
+fragment CursusSessiesFields on CursusSessie {
+  CanUnRegister
+  CourseId
+  SpecialtyId
+  CourseCode
+  Title
+  Date
+  StartTime
+  EndTime
+  Price
+  LocationName
+  LocationAddress {
+    Street
+    HouseNr
+    HouseNrExtension
+    Zipcode
+    City
+    Email
+    Website
+  }
+  Distance
+  Competence
+  Theme
+  Organizer
+  OrganizerEmail
+  OrganizerPhone
+  OrganizerWebsite
+  PromoText
+  Registered
+  RegisteredDate
+  SpecialtyWebsite
+}
+
+query App_GetCursusSessiesDetailsNoLicense($input: searchCourseSessionsInput!) {
+  CursusSessies(input: $input) {
+    CanUnRegister
+    CourseId
+    SpecialtyId
+    CourseCode
+    Title
+    Date
+    StartTime
+    EndTime
+    Price
+    LocationName
+    LocationAddress {
+      Street
+      HouseNr
+      HouseNrExtension
+      Zipcode
+      City
+      Email
+      Website
+    }
+    Distance
+    Competence
+    Theme
+    Organizer
+    OrganizerEmail
+    OrganizerPhone
+    OrganizerWebsite
+    PromoText
+    Registered
+    RegisteredDate
+    SpecialtyWebsite
+  }
+}
+
+query App_GetCursusSessiesDetails(
+  $input: searchCourseSessionsInput!
+  $inputCheck: isLicenseValidForSpecialtyInput!
+) {
+  CursusSessies(input: $input) {
+    CanUnRegister
+    CourseId
+    SpecialtyId
+    CourseCode
+    Title
+    Date
+    StartTime
+    EndTime
+    Price
+    LocationName
+    LocationAddress {
+      Street
+      HouseNr
+      HouseNrExtension
+      Zipcode
+      City
+      Email
+      Website
+    }
+    Distance
+    Competence
+    Theme
+    Organizer
+    OrganizerEmail
+    OrganizerPhone
+    OrganizerWebsite
+    PromoText
+    Registered
+    RegisteredDate
+    SpecialtyWebsite
+  }
+  isLicenseValidForSpecialty(input: $inputCheck) {
+    success
+  }
+}
+
+query App_GetSearchSpecialties($input: searchSpecialtyInput!) {
+  SearchSpecialties(input: $input) {
+    SpecialtyId
+    Code
+    Title
+    Price
+    Competence
+    Theme
+    Organizer
+    OrganizerEmail
+    OrganizerPhone
+    OrganizerWebsite
+    PromoText
+    SpecialtyWebsite
+  }
+}
+
+query App_Vakgroepen($input: Int) {
+  Vakgroepen(findById: $input, isActive: true) {
+    VakgroepID
+    ContactgegevensID
+    Naam
+    IsBtwPlichtig
+    Code
+    IsActief
+    Contactgegevens {
+      ContactgegevensID
+      Woonplaats
+    }
+  }
+}
+
+query App_VakgroepDetails($input: Int!) {
+  Vakgroepen(findById: $input) {
+    ...VakgroepDetailsFields
+  }
+}
+
+fragment VakgroepDetailsFields on Vakgroep {
+  VakgroepID
+  ContactgegevensID
+  Naam
+  Code
+  Contactgegevens {
+    ContactgegevensID
+    Adresregel1
+    Adresregel2
+    Huisnummer
+    HuisnummerToevoeging
+    Postcode
+    Woonplaats
+    DisplayAddress
+    DisplayPostalCodeCity
+    Email
+    Telefoon
+    Website
+  }
+}
+
+query App_GetPersoonVakgroepen {
+  GetPersoonVakgroepenForPersoonId {
+    PersoonVakgroepID
+    PersoonID
+    VakgroepID
+    DebiteurNr
+    Vakgroep {
+      VakgroepID
+      Naam
+      Contactgegevens {
+        ContactgegevensID
+        Adresregel1
+        Adresregel2
+        Postcode
+        Woonplaats
+        Email
+        Telefoon
+        Website
+      }
+    }
+  }
+}
+
+query App_GetHandelshuisVestigingen($input: Int) {
+  GetHandelshuisVestigingen(findById: $input) {
+    HandelshuisID
+    HandelshuisVestigingID
+    ContactgegevensID
+    Naam
+    IsBtwPlichtig
+    Code
+    IsActief
+    CdgBedrijfId
+    CdgNevenvestigingId
+    CDGdeelnemer
+    VKLHandel
+    IsHoofdVestiging
+    Contactgegevens {
+      ContactgegevensID
+      Woonplaats
+    }
+  }
+}
+
+query App_GetHandelshuisVestigingDetails($input: Int!) {
+  GetHandelshuisVestigingen(findById: $input) {
+    ...HandelshuisVestigingDetailsFields
+  }
+}
+
+fragment HandelshuisVestigingDetailsFields on HandelshuisVestiging {
+  HandelshuisVestigingID
+  ContactgegevensID
+  Naam
+  Code
+  Contactgegevens {
+    ContactgegevensID
+    Adresregel1
+    Adresregel2
+    Huisnummer
+    HuisnummerToevoeging
+    Postcode
+    Woonplaats
+    DisplayAddress
+    DisplayPostalCodeCity
+    Email
+    Telefoon
+    Website
+  }
+}
+
+query App_GetPersoonHandelshuisVestigingen {
+  GetPersoonHandelshuisvestigingenForPersoonId {
+    PersoonHandelshuisVestigingID
+    PersoonID
+    HandelshuisVestigingID
+    DebiteurNr
+    HandelshuisVestiging {
+      HandelshuisVestigingID
+      Naam
+      Contactgegevens {
+        ContactgegevensID
+        Adresregel1
+        Adresregel2
+        Postcode
+        Woonplaats
+        Email
+        Telefoon
+        Website
+      }
+    }
+  }
+}
+
+#query App_GetCursusSessiesForHoogleraar($input: searchCourseSessionsForHoogleraarInput) {
+query App_GetCursusSessiesForHoogleraar(
+  $input: cursusSessiesForHoogleraarInput
+) {
+  GetCursusSessiesForHoogleraar(input: $input) {
+    SessieID
+    CursusID
+    DatumBegintijd
+    DatumEindtijd
+    Cursus {
+      CursusID
+      Titel
+      IsBesloten
+      CursusCode
+    }
+    Lokatie {
+      LokatieID
+      Naam
+      Contactgegevens {
+        ContactgegevensID
+        Woonplaats
+      }
+    }
+  }
+}
+
+query App_GetCursusInfoForHoogleraar($input: getCursusInfoForHoogleraarInput) {
+  GetCursusInfoForHoogleraar(input: $input) {
+    CursusID
+    Titel
+    IsBesloten
+    CursusCode
+    Prijs
+    Promotietekst
+    Vak {
+      VakID
+      ThemaNaam
+      CompetentieNaam
+    }
+    Sessies {
+      SessieID
+      DatumBegintijd
+      DatumEindtijd
+      Lokatie {
+        LokatieID
+        Naam
+        Contactgegevens {
+          ContactgegevensID
+          DisplayAddress
+        }
+      }
+    }
+  }
+}
+
+query App_GetCursusDeelnemers($input: getCursusDeelnemersInput) {
+  GetCursusDeelnemers(input: $input) {
+    CursusDeelnameID
+    Status
+    Persoon {
+      PersoonID
+      Voorletters
+      Achternaam
+      Tussenvoegsel
+      SortableFullName
+      Geboortedatum
+      Geslacht
+    }
+  }
+}
+
+query App_SearchCursusDeelnemers($input: searchCursusDeelnemersInput) {
+  SearchCursusDeelnemers(input: $input) {
+    PersoonID
+    BSN
+    Voorletters
+    Roepnaam
+    Achternaam
+    Tussenvoegsel
+    SortableFullName
+    Nationaliteit
+    GbaNummer
+    IsGbaGeregistreerd
+    Geboortedatum
+    Geslacht
+    Actief
+    GbaUpdate
+    CursusDeelname {
+      CursusDeelnameID
+      Status
+      Opmerkingen
+      CertificeringID
+    }
+    Certificeringen {
+      ...CertificeringenFields
+    }
+  }
+}
+query App_GetCursusDeelnemer($input: getCursusDeelnemerInput) {
+  GetCursusDeelnemer(input: $input) {
+    PersoonID
+    Geboortedatum
+    FullName
+    Geslacht
+    IsGbaGeregistreerd
+    Contactgegevens {
+      ContactgegevensID
+      DisplayAddress
+    }
+    CursusDeelname {
+      CursusDeelnameID
+      CursusID
+      Status
+    }
+
+    Certificeringen {
+      ...CertificeringenFields
+    }
+  }
+}
+
+query App_GetSpecialtyDetails(
+  $input: searchSpecialtyInput!
+  $inputCheck: isLicenseValidForSpecialtyInput!
+) {
+  SearchSpecialties(input: $input) {
+    ...SpecialtyDetailsFields
+  }
+  isLicenseValidForSpecialty(input: $inputCheck) {
+    success
+  }
+}
+
+query App_GetSpecialtyDetailsNoLicense($input: searchSpecialtyInput!) {
+  SearchSpecialties(input: $input) {
+    ...SpecialtyDetailsFields
+  }
+}
+
+fragment SpecialtyDetailsFields on SearchSpecialtyResult {
+  SpecialtyId
+  Code
+  Title
+  Price
+  Competence
+  Theme
+  Organizer
+  OrganizerEmail
+  OrganizerPhone
+  OrganizerWebsite
+  PromoText
+  SpecialtyWebsite
+}
+
+query App_GetKennisgebieden {
+  Kennisgebieden {
+    KennisgebiedID
+    Naam
+  }
+}
+
+mutation App_registerForCourse($input: registerForCourseInput!) {
+  registerForCourse(input: $input) {
+    success
+    message
+  }
+}
+
+mutation App_registerForCourseByHoogleraar(
+  $input: registerForCourseByHoogleraarInput!
+) {
+  registerForCourseByHoogleraar(input: $input) {
+    success
+    message
+  }
+}
+
+mutation App_unRegisterForCourseByCourseId(
+  $input: unRegisterForCourseByCourseIdInput!
+) {
+  unRegisterForCourseByCourseId(input: $input) {
+    success
+    message
+  }
+}
+mutation App_unregisterForCourseByHoogleraar(
+  $input: unregisterForCourseByHoogleraarInput!
+) {
+  unregisterForCourseByHoogleraar(input: $input) {
+    success
+    message
+  }
+}
+query App_getLists {
+  Themas {
+    ThemaID
+    Naam
+  }
+  Competenties {
+    CompetentieID
+    Naam
+  }
+  Kennisgebieden {
+    KennisgebiedID
+    Naam
+  }
+  Landen {
+    Value
+    Text
+  }
+}
+
+mutation App_InsertPersoonHandelshuisvestigingForPersoonId(
+  $input: InsertPersoonHandelshuisvestigingForPersoonIdInput!
+) {
+  InsertPersoonHandelshuisvestigingForPersoonId(input: $input) {
+    PersoonHandelshuisVestigingID
+    PersoonID
+    HandelshuisVestigingID
+    DebiteurNr
+  }
+}
+
+mutation App_UpdatePersoonHandelshuisvestigingForPersoonId(
+  $input: UpdatePersoonHandelshuisvestigingForPersoonIdInput!
+) {
+  UpdatePersoonHandelshuisvestigingForPersoonId(input: $input) {
+    PersoonHandelshuisVestigingID
+    PersoonID
+    HandelshuisVestigingID
+    DebiteurNr
+  }
+}
+
+mutation App_DeletePersoonHandelshuisvestigingForPersoonId(
+  $input: DeletePersoonHandelshuisvestigingForPersoonIdInput!
+) {
+  DeletePersoonHandelshuisvestigingForPersoonId(input: $input)
+}
+
+query App_GetStudyProgressByLicenseNumber($nummerweergave: SafeString!) {
+  getStudyProgressByLicenseNumber(nummerweergave: $nummerweergave) {
+    Certificering {
+      CertificeringID
+      NummerWeergave
+      Certificaat {
+        CertificaatID
+        Code
+        Naam
+      }
+      BeginDatum
+      EindDatum
+      Status
+      DatumIngetrokkenVan
+      DatumIngetrokkenTot
+      UitstelVerleend
+      UitstelTot
+      Persoon {
+        PersoonID
+        FullName
+        Geboortedatum
+      }
+    }
+  }
+}
+mutation App_InsertPersoonVakgroepForPersoonId(
+  $input: InsertPersoonVakgroepForPersoonIdInput!
+) {
+  InsertPersoonVakgroepForPersoonId(input: $input) {
+    PersoonVakgroepID
+    PersoonID
+    VakgroepID
+    DebiteurNr
+  }
+}
+
+mutation App_UpdatePersoonVakgroepForPersoonId(
+  $input: UpdatePersoonVakgroepForPersoonIdInput!
+) {
+  UpdatePersoonVakgroepForPersoonId(input: $input) {
+    PersoonVakgroepID
+    PersoonID
+    VakgroepID
+    DebiteurNr
+  }
+}
+
+mutation App_DeletePersoonVakgroepForPersoonId(
+  $input: DeletePersoonVakgroepForPersoonIdInput!
+) {
+  DeletePersoonVakgroepForPersoonId(input: $input)
+}

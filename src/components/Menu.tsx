@@ -1,100 +1,89 @@
 import {
   IonContent,
-  IonIcon,
+  IonHeader,
   IonItem,
   IonLabel,
   IonList,
-  IonListHeader,
   IonMenu,
   IonMenuToggle,
-  IonNote,
+  IonTitle,
+  IonToast,
+  IonToolbar,
 } from '@ionic/react';
+import React from 'react';
+import { useHistory, withRouter } from 'react-router-dom';
+import { getMenuItems } from '../menu/menu.service';
+import { deleteAuthState, getAuthState } from '../helpers/authState';
+import { Authenticated } from '../contexts/AuthContext';
 
-import { useLocation } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
-import './Menu.css';
+const Menu: React.FC<unknown> = () => {
+  const authState = getAuthState();
+  const history = useHistory();
+  const appPages = getMenuItems(authState);
+  const { setAuthenticated } = Authenticated.useContainer();
 
-interface AppPage {
-  url: string;
-  iosIcon: string;
-  mdIcon: string;
-  title: string;
-}
-
-const appPages: AppPage[] = [
-  {
-    title: 'Inbox',
-    url: '/page/Inbox',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp
-  },
-  {
-    title: 'Outbox',
-    url: '/page/Outbox',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp
-  },
-  {
-    title: 'Favorites',
-    url: '/page/Favorites',
-    iosIcon: heartOutline,
-    mdIcon: heartSharp
-  },
-  {
-    title: 'Archived',
-    url: '/page/Archived',
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp
-  },
-  {
-    title: 'Trash',
-    url: '/page/Trash',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp
-  },
-  {
-    title: 'Spam',
-    url: '/page/Spam',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp
-  }
-];
-
-const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-
-const Menu: React.FC = () => {
-  const location = useLocation();
+  // const [logout] = useApp_LogoutMutation({});
 
   return (
     <IonMenu contentId="main" type="overlay">
+      <IonHeader>
+        <IonToolbar color="primary">
+          <IonTitle>Menu</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
-        <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
-          {appPages.map((appPage, index) => {
-            return (
-              <IonMenuToggle key={index} autoHide={false}>
-                <IonItem className={location.pathname === appPage.url ? 'selected' : ''} routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
-                  <IonIcon aria-hidden="true" slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
+        <IonList>
+          <IonMenuToggle autoHide={false}>
+            {appPages.map((appPage: any, index: number) => {
+              return appPage.title !== 'Uitloggen' ? (
+                <IonItem
+                  key={index}
+                  button
+                  routerLink={appPage.url}
+                  routerDirection="root"
+                >
+                  {/* <IonIcon slot="start" icon={appPage.icon} /> */}
                   <IonLabel>{appPage.title}</IonLabel>
                 </IonItem>
-              </IonMenuToggle>
-            );
-          })}
-        </IonList>
-
-        <IonList id="labels-list">
-          <IonListHeader>Labels</IonListHeader>
-          {labels.map((label, index) => (
-            <IonItem lines="none" key={index}>
-              <IonIcon aria-hidden="true" slot="start" icon={bookmarkOutline} />
-              <IonLabel>{label}</IonLabel>
-            </IonItem>
-          ))}
+              ) : (
+                <IonItem
+                  key={index}
+                  button
+                  onClick={async () => {
+                    try {
+                      // await logout();
+                      // setTimeout needed to correctly reset menu items
+                      // setTimeout(() => {
+                      setAuthenticated(false);
+                      history.push('/inloggen', { direction: 'root' });
+                      // }, 1);
+                      deleteAuthState();
+                    } catch (err) {
+                      // setTimeout needed to correctly reset menu items
+                      // setTimeout(() => {
+                      setAuthenticated(false);
+                      history.push('/inloggen', { direction: 'root' });
+                      // }, 1);
+                      deleteAuthState();
+                      <IonToast
+                        isOpen={true}
+                        message="Kon niet uitloggen"
+                        duration={2000}
+                        position="top"
+                        color="danger"
+                      />;
+                    }
+                  }}
+                >
+                  <IonLabel>{appPage.title}</IonLabel>
+                </IonItem>
+              );
+            })}
+          </IonMenuToggle>
         </IonList>
       </IonContent>
     </IonMenu>
   );
 };
 
-export default Menu;
+export default withRouter(Menu);

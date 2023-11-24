@@ -1,4 +1,4 @@
-package new.ionic.v7;
+package nl.bureauerkenningen;
 
 import com.getcapacitor.BridgeActivity;
 
