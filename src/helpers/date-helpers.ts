@@ -1,6 +1,6 @@
-import { formatDistanceToNow } from 'date-fns';
-import format from 'date-fns/format';
-import nlLocale from 'date-fns/locale/nl';
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
+import { format } from 'date-fns/format';
+import { nl } from 'date-fns/locale/nl';
 
 /**
  * Converts a date to UTC date only (no time)
@@ -61,7 +61,7 @@ export function relativeTimeFormatter(date1: Date): string {
     return '';
   }
   return formatDistanceToNow(new Date(date1), {
-    locale: nlLocale,
+    locale: nl,
     addSuffix: true,
   }).replace('over', 'verloopt of eindigt in');
 }

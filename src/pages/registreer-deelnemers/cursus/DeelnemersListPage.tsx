@@ -23,7 +23,7 @@ import {
   IonListHeader,
 } from '@ionic/react';
 import { add, qrCode, card, personOutline } from 'ionicons/icons';
-// import { RegistreerDeelnemerByQRModal } from './RegistreerDeelnemerByQRModal';
+import { RegistreerDeelnemerByQRModal } from './RegistreerDeelnemerByQRModal';
 import { RegistreerDeelnemerByManualModal } from './RegistreerDeelnemerByManualModal';
 import { RegistreerDeelnemerByCardModal } from './RegistreerDeelnemerByCardModal';
 
@@ -43,10 +43,10 @@ const DeelnemersListPage: React.FC = () => {
   const { cursusId } = useParams<{ cursusId: string }>();
   const [searchText, setSearchText] = useState('');
 
-  // const [
-  //   showRegistreerDeelnemerByQRModal,
-  //   setShowRegistreerDeelnemerByQRModal,
-  // ] = useState<boolean>(false);
+  const [
+    showRegistreerDeelnemerByQRModal,
+    setShowRegistreerDeelnemerByQRModal,
+  ] = useState<boolean>(false);
 
   const [ShowRegistreerDeelnemerByManual, setShowRegistreerDeelnemerByManual] =
     useState<boolean>(false);
@@ -339,16 +339,16 @@ const DeelnemersListPage: React.FC = () => {
                 >
                   <IonIcon icon={card} />
                 </IonFabButton>
-                {/* <IonFabButton
+                <IonFabButton
                   onClick={() => setShowRegistreerDeelnemerByQRModal(true)}
                 >
                   <IonIcon icon={qrCode} />
-                </IonFabButton> */}
+                </IonFabButton>
               </IonFabList>
             </IonFab>
           )}
 
-          {/* <IonModal
+          <IonModal
             isOpen={showRegistreerDeelnemerByQRModal}
             onDidDismiss={() => setShowRegistreerDeelnemerByQRModal(false)}
           >
@@ -357,7 +357,7 @@ const DeelnemersListPage: React.FC = () => {
                 setShowRegistreerDeelnemerByQRModal(false);
               }}
             />
-          </IonModal> */}
+          </IonModal>
 
           <IonModal
             isOpen={ShowRegistreerDeelnemerByManual}
