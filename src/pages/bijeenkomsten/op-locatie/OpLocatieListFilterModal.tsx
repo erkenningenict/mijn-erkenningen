@@ -23,8 +23,8 @@ import {
   useApp_GetMyQuery,
 } from '../../../__generated__/graphql';
 import { checkAuthenticationError } from '../../../helpers/error-helper';
-import add from 'date-fns/add';
-import { endOfDay } from 'date-fns';
+import { add } from 'date-fns/add';
+import { endOfDay } from 'date-fns/endOfDay';
 import { toDutchDate } from '../../../helpers/date-helpers';
 import { FilterSettings, SimpleFilter } from '../../../contexts/FilterSettings';
 import SelectLicenseModal from '../../../components/SelectLicenseModal';
