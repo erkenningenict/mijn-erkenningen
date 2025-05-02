@@ -124,3 +124,12 @@ ion-list-header.md {
 .text-bold {
   font-weight: bold;
 }
+.m-2 {
+  margin: 1rem;
+}
+.alertText {
+  padding: 1rem;
+  background: orange;
+  color: #fff;
+  border-radius: 8px;
+}

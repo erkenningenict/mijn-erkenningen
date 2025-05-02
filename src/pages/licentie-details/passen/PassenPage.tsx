@@ -21,6 +21,7 @@ import {
   PasStatusEnum,
 } from '../../../__generated__/graphql';
 import { toDutchDate } from '../../../helpers/date-helpers';
+import { Deprecated } from '../../../components/Deprecated';
 
 export interface PassenPageProps {
   license?: CertificeringFieldsFragment;
@@ -83,11 +84,9 @@ const PassenPage: React.FC<PassenPageProps> = ({ license }) => {
           })}
         </IonList>
 
-        <IonListHeader>
-          <IonLabel>Uit te leveren passen</IonLabel>
-        </IonListHeader>
+        <Deprecated className="m-2" />
 
-        <IonList>
+        {/* <IonList>
           {uitTeLeverenPassen?.length === 0 && (
             <div className="ion-padding">
               <h6>Er zijn geen uit te leveren passen gevonden</h6>
@@ -109,7 +108,7 @@ const PassenPage: React.FC<PassenPageProps> = ({ license }) => {
               </IonItem>
             );
           })}
-        </IonList>
+        </IonList> */}
       </IonContent>
     </IonPage>
   );

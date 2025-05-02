@@ -26,6 +26,7 @@ import {
   CertificeringenFieldsFragment,
   useApp_GetMyQuery,
 } from '../../__generated__/graphql';
+import { Deprecated } from '../../components/Deprecated';
 
 export interface MijnLicentiesProps {}
 
@@ -86,6 +87,7 @@ const MijnLicentiesPage: React.FC<MijnLicentiesProps> = () => {
         <IonListHeader>
           <IonLabel>Geldige licenties</IonLabel>
         </IonListHeader>
+        <Deprecated className="m-2" />
 
         <IonList>
           {activeLicensesList?.length === 0 && <NoLicense></NoLicense>}

@@ -35,6 +35,7 @@ import {
   useApp_GetStudyProgressByLicenseIdQuery,
 } from '../../../__generated__/graphql';
 import './BijeenkomstenBijLicentie.css';
+import { Deprecated } from '../../../components/Deprecated';
 
 const BijeenkomstenBijLicentie: React.FC = () => {
   const { certificeringId } = useParams<{ certificeringId: string }>();
@@ -131,12 +132,14 @@ const BijeenkomstenBijLicentie: React.FC = () => {
               <IonLabel>Aankomende bijeenkomsten</IonLabel>
             </IonListHeader>
 
+            <Deprecated className="m-2" />
+
             <IonList>
               {data?.my?.AangemeldeCursusDeelnamesPerCertificeringId?.length ===
                 0 && (
                 <>
                   <div className="nothingFollowed">
-                    <h6>Er staan geen bijeenkomsten gepland</h6>
+                    {/* <h6>Er staan geen bijeenkomsten gepland</h6>
 
                     <p style={{ marginBottom: '10px' }}>
                       Volg een bijeenkomst om uw licentie te verlengen.
@@ -144,7 +147,7 @@ const BijeenkomstenBijLicentie: React.FC = () => {
 
                     <IonButton expand="block" routerLink="/bijeenkomsten">
                       Zoek een bijeenkomst
-                    </IonButton>
+                    </IonButton> */}
                   </div>
                 </>
               )}

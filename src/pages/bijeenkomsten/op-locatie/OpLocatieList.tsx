@@ -34,133 +34,139 @@ import {
   OpLocatieListFilterModal,
   OpLocatieFilters,
 } from './OpLocatieListFilterModal';
+import { Deprecated } from '../../../components/Deprecated';
 
 const OpLocatieList: React.FC = () => {
-  const { search } = useLocation();
+  // const { search } = useLocation();
   const { license } = SelectedLicense.useContainer();
-  const { filterSettings, setFilterSettings } = SimpleFilter.useContainer();
+  // const { filterSettings, setFilterSettings } = SimpleFilter.useContainer();
 
-  const [searchText, setSearchText] = useState('');
-  const [showFilterModal, setShowFilterModal] = useState(false);
+  // const [searchText, setSearchText] = useState('');
+  // const [showFilterModal, setShowFilterModal] = useState(false);
 
-  const {
-    loading: loadingMy,
-    error: myError,
-    data: myData,
-  } = useApp_GetMyQuery({
-    fetchPolicy: 'cache-and-network',
-  });
+  // const {
+  //   loading: loadingMy,
+  //   error: myError,
+  //   data: myData,
+  // } = useApp_GetMyQuery({
+  //   fetchPolicy: 'cache-and-network',
+  // });
 
-  const postcodeCijfers =
-    filterSettings.postcode && filterSettings.postcode.match(/^\d{4}/)
-      ? +filterSettings.postcode.substring(0, 4)
-      : undefined;
+  // const postcodeCijfers =
+  //   filterSettings.postcode && filterSettings.postcode.match(/^\d{4}/)
+  //     ? +filterSettings.postcode.substring(0, 4)
+  //     : undefined;
 
-  const { loading, error, data, refetch } = useApp_GetCursusSessiesQuery({
-    variables: {
-      input: {
-        isOnlineCourse: false,
-        themeId: filterSettings.themaId,
-        competenceId: filterSettings.competentieId,
-        knowledgeAreaId: filterSettings.sectorId,
-        from: filterSettings.datumVanaf,
-        to: filterSettings.datumTot,
-        distanceRadius: filterSettings.afstand,
-        zipcodeNumbers: postcodeCijfers,
-        isWebinar: false,
-      },
-    },
-    fetchPolicy: 'cache-and-network',
-    nextFetchPolicy: 'cache-first',
-  });
+  // const { loading, error, data, refetch } = useApp_GetCursusSessiesQuery({
+  //   variables: {
+  //     input: {
+  //       isOnlineCourse: false,
+  //       themeId: filterSettings.themaId,
+  //       competenceId: filterSettings.competentieId,
+  //       knowledgeAreaId: filterSettings.sectorId,
+  //       from: filterSettings.datumVanaf,
+  //       to: filterSettings.datumTot,
+  //       distanceRadius: filterSettings.afstand,
+  //       zipcodeNumbers: postcodeCijfers,
+  //       isWebinar: false,
+  //     },
+  //   },
+  //   fetchPolicy: 'cache-and-network',
+  //   nextFetchPolicy: 'cache-first',
+  // });
 
-  const { error: errorLists, data: dataLists } = useApp_GetListsQuery({
-    fetchPolicy: 'cache-first',
-  });
-  const userPostcode = myData?.my?.Persoon.Contactgegevens.Postcode;
+  // const { error: errorLists, data: dataLists } = useApp_GetListsQuery({
+  //   fetchPolicy: 'cache-first',
+  // });
+  // const userPostcode = myData?.my?.Persoon.Contactgegevens.Postcode;
 
-  useEffect(() => {
-    if (filterSettings.postcode === '') {
-      setFilterSettings({
-        ...filterSettings,
-        postcode: userPostcode ?? '',
-      });
-    }
-  }, [userPostcode]);
+  // useEffect(() => {
+  //   if (filterSettings.postcode === '') {
+  //     setFilterSettings({
+  //       ...filterSettings,
+  //       postcode: userPostcode ?? '',
+  //     });
+  //   }
+  // }, [userPostcode]);
 
-  if (error || errorLists) {
-    console.log('#DH# my errors', error, myError);
-    return <ErrorComponent error={error} />;
-  }
-  if (myError) {
-    console.log('#DH# my errors', error, myError);
-    return <ErrorComponent error={myError} />;
-  }
+  // if (error || errorLists) {
+  //   console.log('#DH# my errors', error, myError);
+  //   return <ErrorComponent error={error} />;
+  // }
+  // if (myError) {
+  //   console.log('#DH# my errors', error, myError);
+  //   return <ErrorComponent error={myError} />;
+  // }
 
-  const doRefresh = async (event: CustomEvent<RefresherEventDetail>) => {
-    try {
-      await refetch();
-    } catch (error) {
-      return <ErrorComponent error={error} />;
-    }
-    event.detail.complete();
-  };
+  // const doRefresh = async (event: CustomEvent<RefresherEventDetail>) => {
+  //   try {
+  //     await refetch();
+  //   } catch (error) {
+  //     return <ErrorComponent error={error} />;
+  //   }
+  //   event.detail.complete();
+  // };
 
-  const opLocatie = data?.CursusSessies;
+  // const opLocatie = data?.CursusSessies;
 
-  const handleSetFilterValues = (values: OpLocatieFilters) => {
-    setFilterSettings({
-      competentieId: values.competentieId,
-      sectorId: values.sectorId,
-      themaId: values.themaId,
-      datumVanaf: values.datumVanaf,
-      datumTot: values.datumTot,
-      dateSet: new Date(),
-      afstand: values.afstand,
-      postcode: values.postcode,
-    });
-  };
+  // const handleSetFilterValues = (values: OpLocatieFilters) => {
+  //   setFilterSettings({
+  //     competentieId: values.competentieId,
+  //     sectorId: values.sectorId,
+  //     themaId: values.themaId,
+  //     datumVanaf: values.datumVanaf,
+  //     datumTot: values.datumTot,
+  //     dateSet: new Date(),
+  //     afstand: values.afstand,
+  //     postcode: values.postcode,
+  //   });
+  // };
 
-  const checkFilterSettings = (): string => {
-    let themaFilter = '';
-    if (filterSettings.themaId !== 0) {
-      themaFilter =
-        `Thema: ${dataLists?.Themas.find(
-          (t) => t.ThemaID === filterSettings.themaId,
-        )?.Naam}` ?? '';
-    }
-    let competentieFilter = '';
-    if (filterSettings.competentieId !== 0) {
-      competentieFilter =
-        `Bijeenkomsttype: ${dataLists?.Competenties.find(
-          (c) => c.CompetentieID === filterSettings.competentieId,
-        )?.Naam}` ?? '';
-    }
-    let sectorFilter = '';
-    if (filterSettings.sectorId !== 0) {
-      sectorFilter =
-        `Sector: ${dataLists?.Kennisgebieden.find(
-          (k) => k.KennisgebiedID === filterSettings.sectorId,
-        )?.Naam}` ?? '';
-    }
-    let afstand = '';
-    if (filterSettings.afstand !== 0) {
-      afstand = `Afstand: ${filterSettings.afstand} km`;
-    }
-    const dateFilters = `${toDutchDate(
-      filterSettings.datumVanaf,
-    )} - ${toDutchDate(filterSettings.datumTot)}`;
-    const res = [
-      themaFilter,
-      competentieFilter,
-      sectorFilter,
-      afstand,
-      dateFilters,
-    ]
-      .filter((x) => x !== '')
-      .join(', ');
-    return res === '' ? 'Geen filter van toepassing' : res;
-  };
+  // const checkFilterSettings = (): string => {
+  //   let themaFilter = '';
+  //   if (filterSettings.themaId !== 0) {
+  //     themaFilter =
+  //       `Thema: ${
+  //         dataLists?.Themas.find((t) => t.ThemaID === filterSettings.themaId)
+  //           ?.Naam
+  //       }` ?? '';
+  //   }
+  //   let competentieFilter = '';
+  //   if (filterSettings.competentieId !== 0) {
+  //     competentieFilter =
+  //       `Bijeenkomsttype: ${
+  //         dataLists?.Competenties.find(
+  //           (c) => c.CompetentieID === filterSettings.competentieId,
+  //         )?.Naam
+  //       }` ?? '';
+  //   }
+  //   let sectorFilter = '';
+  //   if (filterSettings.sectorId !== 0) {
+  //     sectorFilter =
+  //       `Sector: ${
+  //         dataLists?.Kennisgebieden.find(
+  //           (k) => k.KennisgebiedID === filterSettings.sectorId,
+  //         )?.Naam
+  //       }` ?? '';
+  //   }
+  //   let afstand = '';
+  //   if (filterSettings.afstand !== 0) {
+  //     afstand = `Afstand: ${filterSettings.afstand} km`;
+  //   }
+  //   const dateFilters = `${toDutchDate(
+  //     filterSettings.datumVanaf,
+  //   )} - ${toDutchDate(filterSettings.datumTot)}`;
+  //   const res = [
+  //     themaFilter,
+  //     competentieFilter,
+  //     sectorFilter,
+  //     afstand,
+  //     dateFilters,
+  //   ]
+  //     .filter((x) => x !== '')
+  //     .join(', ');
+  //   return res === '' ? 'Geen filter van toepassing' : res;
+  // };
 
   return (
     <IonPage>
@@ -169,14 +175,14 @@ const OpLocatieList: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonButtons slot="end">
+          {/* <IonButtons slot="end">
             <IonButton onClick={() => setShowFilterModal(true)}>
               Filter
             </IonButton>
-          </IonButtons>
+          </IonButtons> */}
           <IonTitle>
             <div style={{ fontSize: '80%' }}>Bijeenkomsten op locatie</div>
-            <div
+            {/* <div
               style={{
                 fontSize: '60%',
                 fontWeight: 'normal',
@@ -186,13 +192,21 @@ const OpLocatieList: React.FC = () => {
               {opLocatie && opLocatie?.length > 0
                 ? `${opLocatie?.length} gevonden`
                 : ''}
-            </div>
+            </div> */}
           </IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent>
-        <IonSearchbar
+        <Deprecated className="m-2" />
+        {/* <script
+          id="scriptroot8a028d23"
+          type="module"
+          src="https://groene-erkenningen-calendar.netlify.app/assets/index-BuAZvyuz.js"
+        ></script>
+        <fw-calendar data-theme="gewasbescherming" id="root" /> */}
+
+        {/* <IonSearchbar
           placeholder="Zoek op titel, aanbieder of plaats"
           value={searchText}
           onIonChange={(e) => setSearchText(e.detail.value?.toLowerCase()!)}
@@ -273,10 +287,10 @@ const OpLocatieList: React.FC = () => {
         )}
         <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
           <IonRefresherContent></IonRefresherContent>
-        </IonRefresher>
+        </IonRefresher> */}
       </IonContent>
 
-      <IonModal
+      {/* <IonModal
         isOpen={showFilterModal}
         onDidDismiss={() => setShowFilterModal(false)}
       >
@@ -291,7 +305,7 @@ const OpLocatieList: React.FC = () => {
         isOpen={loading || loadingMy}
         message={'Even geduld aub, gegevens worden opgehaald'}
         duration={0}
-      />
+      /> */}
     </IonPage>
   );
 };

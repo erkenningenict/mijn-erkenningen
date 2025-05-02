@@ -28,6 +28,7 @@ import LicenseValidityBadge from '../../../components/LicenseValidityBadge';
 import { isLicenseValidOnDate } from '../../../helpers/license-helper';
 import ErrorComponent from '../../../components/ErrorComponent';
 import { useParams } from 'react-router';
+import { Deprecated } from '../../../components/Deprecated';
 
 const LicenseOverview: React.FC = () => {
   const { certificeringId } = useParams<{ certificeringId: string }>();
@@ -80,6 +81,7 @@ const LicenseOverview: React.FC = () => {
               </div>
             </IonCardTitle>
           </IonCardHeader>
+          <Deprecated className="m-2" />
           {license && (
             <IonCardContent>
               <dl className="styled-dl">

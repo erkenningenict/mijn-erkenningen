@@ -17,6 +17,7 @@ import ErrorComponent from '../../components/ErrorComponent';
 import GeldigeLicentiesPage from './geldige-licenties/GeldigeLicenties';
 import { ApplicationRolesEnum } from '../../enums/enums';
 import AankomendeBijeenkomsten from './hoogleraar/AankomendeBijeenkomsten';
+import { Deprecated } from '../../components/Deprecated';
 
 const DashboardPage: React.FC = () => {
   const { loading, error, data, refetch } = useApp_GetMyQuery({
@@ -46,6 +47,7 @@ const DashboardPage: React.FC = () => {
           <IonTitle>Dashboard</IonTitle>
         </IonToolbar>
       </IonHeader>
+      <Deprecated className="m-2" />
 
       <IonContent>
         <IonLoading

@@ -18,10 +18,23 @@ import { getAuthState } from '../helpers/authState';
 
 const HomePage: React.FC = () => {
   const authContext = getAuthState();
-  const unAuthContent =
-    'Log in om uw gegevens te kunnen zien en om bijeenkomsten te zoeken en aan te melden en meer.';
-  const studentContent =
-    'Bekijk uw licenties en zoek bijeenkomsten om u voor aan te melden.';
+  const unAuthContent = (
+    <p>
+      LET OP: Deze app is niet meer up-to-date met de laatste status van uw
+      licentie(s). Bekijk uw huidige licentieoverzicht op{' '}
+      <a
+        target="_blank"
+        href="https://mijn.ibki.nl/main/pages/bureau_erkenningen/bureau_erkenningen/welkom_bij_bureau_erkenningen/welkom_bij_bureau_erkenningen?context=215bdc7b9e494bcf8e70fc2a15527b7d"
+      >
+        mijn.ibki.nl
+      </a>
+      . Log in om uw (verouderde) gegevens te kunnen zien en om bijeenkomsten te
+      zoeken en aan te melden en meer.
+    </p>
+  );
+  const studentContent = (
+    <p>Bekijk uw licenties en zoek bijeenkomsten om u voor aan te melden.</p>
+  );
   return (
     <IonPage>
       <IonHeader>
@@ -46,13 +59,11 @@ const HomePage: React.FC = () => {
             </IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            <p>
-              {!authContext?.isAuthenticated
-                ? unAuthContent
-                : authContext?.roles?.includes('Student')
+            {!authContext?.isAuthenticated
+              ? unAuthContent
+              : authContext?.roles?.includes('Student')
                 ? studentContent
                 : 'Log in om uw gegevens te kunnen bekijken.'}
-            </p>
           </IonCardContent>
         </IonCard>
 

@@ -13,6 +13,7 @@ import {
   IonBackButton,
   IonIcon,
   IonLoading,
+  IonAlert,
 } from '@ionic/react';
 import { chevronForward } from 'ionicons/icons';
 import React from 'react';
@@ -25,6 +26,7 @@ import {
   useApp_GetStudyProgressByLicenseIdQuery,
 } from '../../../__generated__/graphql';
 import './StudyProgress.css';
+import { Deprecated } from '../../../components/Deprecated';
 
 const StudyProgress: React.FC = () => {
   const { filterSettings, setFilterSettings } = SimpleFilter.useContainer();
@@ -332,6 +334,7 @@ const StudyProgress: React.FC = () => {
               </p>
             )}
             <p>Neem bij twijfel contact op met uw kennisaanbieder.</p>
+            <Deprecated />
           </IonCardContent>
         </IonCard>
 
